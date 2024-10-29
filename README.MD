@@ -19,7 +19,7 @@
 To install `boiler-gen` globally, run:
 
 ```bash
-go install github.com/your-username/boiler-gen@latest
+go install github.com/getaseww/boiler-gen@latest
 ```
 
 This will install the `boiler-gen` command to your `GOPATH/bin` directory, making it available globally.
