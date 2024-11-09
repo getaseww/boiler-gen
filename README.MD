@@ -1,6 +1,6 @@
 # Boiler-Gen
 
-**Boiler-Gen** is a simple CLI tool designed to quickly generate boilerplate code files for your project, including models, repositories, services, controllers, and routes. This tool helps streamline project setup and standardize file structure for faster development.
+**Boiler-Gen** is a simple CLI tool designed to quickly generate boilerplate code for your project, including models, repositories, services, controllers, and routes. This tool helps streamline project setup and standardize file structure for faster development.
 
 ## Features
 
