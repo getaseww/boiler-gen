@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"strings"
+	"unicode"
 
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
@@ -59,4 +60,21 @@ func LowercaseFirstLetter(s string) string {
 		return s
 	}
 	return string(s[0]+32) + s[1:]
+}
+
+//camel case to kebab case convertor
+
+func CamelToKebab(input string) string {
+	var result []rune
+
+	for i, r := range input {
+		// If the rune is an uppercase letter, add a hyphen before it
+		if unicode.IsUpper(r) && i > 0 {
+			result = append(result, '-')
+		}
+		// Append the lowercase version of the rune
+		result = append(result, unicode.ToLower(r))
+	}
+
+	return string(result)
 }
