@@ -78,7 +78,7 @@ func generateHandler(moduleName string) {
 	fmt.Printf("Generated handler: %s\n", filePath)
 }
 
-// Generate route file inside the routes directory
+// Generate route template file
 func generateRoute(moduleName string) {
 	routeDir := "./api/v1/routes"
 	err := helpers.CreateDirIfNotExist(routeDir)
@@ -91,6 +91,36 @@ func generateRoute(moduleName string) {
 	filePath := fmt.Sprintf("%s/%s.go", routeDir, helpers.FormatModuleName(moduleName))
 	helpers.CreateFile(filePath, routeContent)
 	fmt.Printf("Generated route: %s\n", filePath)
+}
+
+// Generate migration template file
+func generateMigration(moduleName string) {
+	routeDir := "./internal/database/migrations"
+	err := helpers.CreateDirIfNotExist(routeDir)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	migrationContent := templates.MigrationTemplate(moduleName)
+
+	filePath := fmt.Sprintf("%s/%s.go", routeDir, helpers.FormatModuleName(moduleName))
+	helpers.CreateFile(filePath, migrationContent)
+	fmt.Printf("Generated migration: %s\n", filePath)
+}
+
+// Generate migration template file
+func generateSeeder(moduleName string) {
+	routeDir := "./internal/database/seeders"
+	err := helpers.CreateDirIfNotExist(routeDir)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	seederContent := templates.SeederTemplate(moduleName)
+
+	filePath := fmt.Sprintf("%s/%s.go", routeDir, helpers.FormatModuleName(moduleName))
+	helpers.CreateFile(filePath, seederContent)
+	fmt.Printf("Generated seeder: %s\n", filePath)
 }
 
 // Command for generating the model file
@@ -143,6 +173,26 @@ var routeCmd = &cobra.Command{
 	},
 }
 
+// Command for generating the migration template
+var migrationCmd = &cobra.Command{
+	Use:   "db:migration",
+	Short: "Generate a migration template",
+	Run: func(cmd *cobra.Command, args []string) {
+		fmt.Printf("Generating migration template for table: %s\n", moduleName)
+		generateMigration(moduleName)
+	},
+}
+
+// Command for generating the migration template
+var seederCmd = &cobra.Command{
+	Use:   "db:seeder",
+	Short: "Generate a seeder teplate",
+	Run: func(cmd *cobra.Command, args []string) {
+		fmt.Printf("Generating seeder teplate for module: %s\n", moduleName)
+		generateSeeder(moduleName)
+	},
+}
+
 // Command for generating the full feature (model, controller, and route)
 var featureCmd = &cobra.Command{
 	Use:   "make:feature",
@@ -183,6 +233,12 @@ func main() {
 	routeCmd.Flags().StringVarP(&moduleName, "module", "m", "", "Name of the module (required)")
 	routeCmd.MarkFlagRequired("module")
 
+	migrationCmd.Flags().StringVarP(&moduleName, "module", "m", "", "Name of the module (required)")
+	migrationCmd.MarkFlagRequired("module")
+
+	seederCmd.Flags().StringVarP(&moduleName, "module", "m", "", "Name of the module (required)")
+	seederCmd.MarkFlagRequired("module")
+
 	// Add commands to the root
 	rootCmd.AddCommand(modelCmd)
 	rootCmd.AddCommand(handlerCmd)
@@ -190,6 +246,9 @@ func main() {
 	rootCmd.AddCommand(routeCmd)
 	rootCmd.AddCommand(serviceCmd)
 	rootCmd.AddCommand(repositoryCmd)
+
+	rootCmd.AddCommand(migrationCmd)
+	rootCmd.AddCommand(seederCmd)
 
 	// Execute the root command
 	if err := rootCmd.Execute(); err != nil {
