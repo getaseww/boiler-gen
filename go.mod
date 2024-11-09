@@ -1,4 +1,4 @@
-module boiler-gen
+module github.com/getaseww/boiler-gen
 
 go 1.23.2
 

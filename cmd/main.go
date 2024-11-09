@@ -5,8 +5,8 @@ import (
 	"log"
 	"os"
 
-	"boiler-gen/src/helpers"
-	"boiler-gen/src/templates"
+	"github.com/getaseww/boiler-gen/src/helpers"
+	"github.com/getaseww/boiler-gen/src/templates"
 
 	"github.com/spf13/cobra"
 )
@@ -19,7 +19,7 @@ var (
 
 // Generate model file inside the model directory
 func generateModel(moduleName string) {
-	modelDir := "./models"
+	modelDir := "./internal/database/models"
 	err := helpers.CreateDirIfNotExist(modelDir)
 	if err != nil {
 		log.Fatal(err)
@@ -34,7 +34,7 @@ func generateModel(moduleName string) {
 
 // Generate model file inside the model directory
 func generateRepository(moduleName string) {
-	modelDir := "./repositories"
+	modelDir := "./internal/repositories"
 	err := helpers.CreateDirIfNotExist(modelDir)
 	if err != nil {
 		log.Fatal(err)
@@ -49,7 +49,7 @@ func generateRepository(moduleName string) {
 
 // Generate model file inside the model directory
 func generateService(moduleName string) {
-	modelDir := "./services"
+	modelDir := "./internal/services"
 	err := helpers.CreateDirIfNotExist(modelDir)
 	if err != nil {
 		log.Fatal(err)
@@ -63,23 +63,23 @@ func generateService(moduleName string) {
 }
 
 // Generate controller file inside the controller directory
-func generateController(moduleName string) {
-	controllerDir := "./controllers"
-	err := helpers.CreateDirIfNotExist(controllerDir)
+func generateHandler(moduleName string) {
+	handlerDir := "./api/v1/handlers"
+	err := helpers.CreateDirIfNotExist(handlerDir)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	controllerContent := templates.ControllerTemplate(moduleName)
+	handlerContent := templates.HandlerTemplate(moduleName)
 
-	filePath := fmt.Sprintf("%s/%sController.go", controllerDir, helpers.FormatModuleName(moduleName))
-	helpers.CreateFile(filePath, controllerContent)
-	fmt.Printf("Generated controller: %s\n", filePath)
+	filePath := fmt.Sprintf("%s/%s.go", handlerDir, helpers.FormatModuleName(moduleName))
+	helpers.CreateFile(filePath, handlerContent)
+	fmt.Printf("Generated handler: %s\n", filePath)
 }
 
 // Generate route file inside the routes directory
 func generateRoute(moduleName string) {
-	routeDir := "./routes"
+	routeDir := "./api/v1/routes"
 	err := helpers.CreateDirIfNotExist(routeDir)
 	if err != nil {
 		log.Fatal(err)
@@ -122,13 +122,13 @@ var serviceCmd = &cobra.Command{
 	},
 }
 
-// Command for generating the controller file
-var controllerCmd = &cobra.Command{
-	Use:   "make:controller",
-	Short: "Generate a controller file",
+// Command for generating the handler file
+var handlerCmd = &cobra.Command{
+	Use:   "make:handler",
+	Short: "Generate a handler file",
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Printf("Generating controller for module: %s\n", moduleName)
-		generateController(moduleName)
+		fmt.Printf("Generating handler for module: %s\n", moduleName)
+		generateHandler(moduleName)
 	},
 }
 
@@ -145,13 +145,13 @@ var routeCmd = &cobra.Command{
 // Command for generating the full feature (model, controller, and route)
 var featureCmd = &cobra.Command{
 	Use:   "make:feature",
-	Short: "Generate model, repository, service, controller, and route files",
+	Short: "Generate model, repository, service, handler, and route files",
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Printf("Generating all files for module: %s\n", moduleName)
 		generateModel(moduleName)
 		generateRepository(moduleName)
 		generateService(moduleName)
-		generateController(moduleName)
+		generateHandler(moduleName)
 		generateRoute(moduleName)
 	},
 }
@@ -173,8 +173,8 @@ func main() {
 	serviceCmd.Flags().StringVarP(&moduleName, "module", "m", "", "Name of the module (required)")
 	serviceCmd.MarkFlagRequired("module")
 
-	controllerCmd.Flags().StringVarP(&moduleName, "module", "m", "", "Name of the module (required)")
-	controllerCmd.MarkFlagRequired("module")
+	handlerCmd.Flags().StringVarP(&moduleName, "module", "m", "", "Name of the module (required)")
+	handlerCmd.MarkFlagRequired("module")
 
 	featureCmd.Flags().StringVarP(&moduleName, "module", "m", "", "Name of the module (required)")
 	featureCmd.MarkFlagRequired("module")
@@ -184,7 +184,7 @@ func main() {
 
 	// Add commands to the root
 	rootCmd.AddCommand(modelCmd)
-	rootCmd.AddCommand(controllerCmd)
+	rootCmd.AddCommand(handlerCmd)
 	rootCmd.AddCommand(featureCmd)
 	rootCmd.AddCommand(routeCmd)
 	rootCmd.AddCommand(serviceCmd)

@@ -42,24 +42,24 @@ boiler-gen [command]
 
 ### Available Commands
 
-- `completion`      - Generate the autocompletion script for the specified shell.
-- `help`            - Show help for any command.
-- `make:controller` - Generate a controller file.
-- `make:feature`    - Generate model, repository, service, controller, and route files for a complete feature.
-- `make:model`      - Generate a model file.
+- `completion` - Generate the autocompletion script for the specified shell.
+- `help` - Show help for any command.
+- `make:handler` - Generate a handler file.
+- `make:feature` - Generate model, repository, service, handler, and route files for a complete feature.
+- `make:model` - Generate a model file.
 - `make:repository` - Generate a repository file.
-- `make:route`      - Generate a route file.
-- `make:service`    - Generate a service file.
+- `make:route` - Generate a route file.
+- `make:service` - Generate a service file.
 
 ### Example Usage
 
-Generate a controller file:
+Generate a handler file:
 
 ```bash
-boiler-gen make:controller
+boiler-gen make:handler
 ```
 
-Generate a complete feature with model, repository, service, controller, and route files:
+Generate a complete feature with model, repository, service, handler, and route files:
 
 ```bash
 boiler-gen make:feature
@@ -73,7 +73,7 @@ boiler-gen make:model --help
 
 ### Flags
 
-- `-h, --help`   - Show general help for `boiler-gen`.
+- `-h, --help` - Show general help for `boiler-gen`.
 
 ## Autocompletion
 

@@ -2,8 +2,8 @@ package templates
 
 import "fmt"
 
-func ControllerTemplate(moduleName string) string {
-	controllerContent := fmt.Sprintf(`package controllers  
+func HandlerTemplate(moduleName string) string {
+	handlerContent := fmt.Sprintf(`package controllers  
      import (
        "net/http"
      )
@@ -14,5 +14,5 @@ func ControllerTemplate(moduleName string) string {
     // Add controller logic here
      }`, moduleName, moduleName)
 
-	return controllerContent
+	return handlerContent
 }
