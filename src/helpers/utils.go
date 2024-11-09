@@ -46,3 +46,17 @@ func FormatModuleName(name string) string {
 	// Join the words back into a single string
 	return strings.Join(words, "")
 }
+
+func CapitalizeFirstLetter(s string) string {
+	if len(s) == 0 {
+		return s
+	}
+	return string(s[0]-32) + s[1:]
+}
+
+func LowercaseFirstLetter(s string) string {
+	if len(s) == 0 {
+		return s
+	}
+	return string(s[0]+32) + s[1:]
+}

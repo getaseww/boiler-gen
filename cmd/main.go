@@ -20,6 +20,7 @@ var (
 // Generate model file inside the model directory
 func generateModel(moduleName string) {
 	modelDir := "./internal/database/models"
+
 	err := helpers.CreateDirIfNotExist(modelDir)
 	if err != nil {
 		log.Fatal(err)
