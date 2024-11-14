@@ -2,12 +2,9 @@ package templates
 
 import (
 	"fmt"
-
-	"github.com/getaseww/boiler-gen/src/helpers"
 )
 
 func ServiceTemplate(moduleName string) string {
-	lowercaseModuleName := helpers.LowercaseFirstLetter(moduleName)
 
 	serviceContent := fmt.Sprintf(`
 	package services
@@ -61,14 +58,14 @@ func Update%s(id uint, val1, val2 string) (models.%s, error) {
 }
 
 func Delete%s(id uint) error {
-	%s, err := repositories.Get%sByID(id)
+	modelInstance, err := repositories.Get%sByID(id)
 	if err != nil {
 		return errors.New("%s not found")
 	}
 
-	%s.IsDeleted = true // Update Field1 with val1
+	modelInstance.IsDeleted = true // Update Field1 with val1
 
-	err = repositories.Delete%s(%s)
+	err = repositories.Delete%s(modelInstance)
 	if err != nil {
 		return errors.New("failed to delete %s")
 	}
@@ -83,9 +80,8 @@ func Delete%s(id uint) error {
 		moduleName, moduleName, moduleName,
 		moduleName, moduleName, moduleName,
 		moduleName,
-		moduleName, lowercaseModuleName, moduleName,
-		moduleName, lowercaseModuleName, moduleName,
-		lowercaseModuleName, moduleName,
+		moduleName, moduleName,
+		moduleName, moduleName, moduleName,
 	)
 
 	return serviceContent

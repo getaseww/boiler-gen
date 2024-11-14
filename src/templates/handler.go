@@ -139,7 +139,7 @@ func Delete%s(c *gin.Context) {
 		lowercaseModuleName, lowercaseModuleName, moduleName,
 		lowercaseModuleName, lowercaseModuleName, moduleName,
 		moduleName, lowercaseModuleName,
-		lowercaseModuleName, moduleName, moduleName, lowercaseModuleName,
+		moduleName, moduleName, moduleName, lowercaseModuleName,
 	)
 
 	return handlerContent
