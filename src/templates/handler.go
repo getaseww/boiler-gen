@@ -24,7 +24,7 @@ import (
 
 func Create%s(c *gin.Context) {
 	var input struct {
-		Input1 string  json:"input1" binding:"required"
+		Email        string    `+"`json:\"email\" binding:\"required\"`"+`
 	}
 	if err := c.ShouldBindJSON(&input); err != nil {
 		response.ErrorResponse(c, http.StatusBadRequest, err, "Unable to fetch %s data")
@@ -88,7 +88,7 @@ func Update%s(c *gin.Context) {
 	}
 
 	var input struct {
-		Input1 string json:"input1" binding:"required"
+		Input1 string    `+"`json:\"email\" binding:\"required\"`"+`
 	}
 	if err := c.ShouldBindJSON(&input); err != nil {
 		response.ErrorResponse(c, http.StatusBadRequest, err, "Unable to parse to json!")
@@ -131,13 +131,15 @@ func Delete%s(c *gin.Context) {
 
 
   `,
-		moduleName, lowercaseModuleName, lowercaseModuleName, moduleName,
-		lowercaseModuleName, lowercaseModuleName, moduleName, lowercaseModuleName,
-		lowercaseModuleName, moduleName, lowercaseModuleName, lowercaseModuleName,
+		moduleName, lowercaseModuleName, lowercaseModuleName,
+		moduleName, lowercaseModuleName, lowercaseModuleName,
+		moduleName, lowercaseModuleName, lowercaseModuleName,
+		moduleName, lowercaseModuleName, lowercaseModuleName,
 		moduleName, lowercaseModuleName, moduleName,
 		lowercaseModuleName, lowercaseModuleName, moduleName,
-		lowercaseModuleName, lowercaseModuleName, lowercaseModuleName, moduleName,
-		lowercaseModuleName, lowercaseModuleName, moduleName, lowercaseModuleName, lowercaseModuleName,
+		lowercaseModuleName, lowercaseModuleName, moduleName,
+		moduleName, lowercaseModuleName,
+		lowercaseModuleName, moduleName, moduleName, lowercaseModuleName,
 	)
 
 	return handlerContent

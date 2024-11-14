@@ -41,8 +41,8 @@ func Update%s(%s models.%s) error {
 	return result.Error
 }
 
-func Delete%s(id uint) error {
-	result := config.DB.Delete(&models.%s{}, id)
+func Delete%s(%s models.%s) error {
+	result := config.DB.Save(&%s)
 	return result.Error
 }
 `,
@@ -51,7 +51,7 @@ func Delete%s(id uint) error {
 		lowercaseModuleName, lowercaseModuleName, capitalizedModuleName, capitalizedModuleName,
 		lowercaseModuleName, capitalizedModuleName, lowercaseModuleName, lowercaseModuleName,
 		capitalizedModuleName, lowercaseModuleName, capitalizedModuleName,
-		lowercaseModuleName, capitalizedModuleName, capitalizedModuleName,
+		lowercaseModuleName, capitalizedModuleName, lowercaseModuleName, capitalizedModuleName, lowercaseModuleName,
 	)
 
 	return repositoryContent
